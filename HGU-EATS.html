@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HGU-EATS | 한동대 맛집 지도</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <h1><i class="fa-solid fa-utensils"></i> HGU-EATS</h1>
+      <p>한동인들을 위한 실시간 맛집 지도</p>
+    </header>
+
+    <main class="container">
+      <input type="radio" name="loc-group" id="chk-all-loc" checked style="display: none" />
+      <input type="radio" name="loc-group" id="chk-handong" style="display: none" />
+      <input type="radio" name="loc-group" id="chk-yangdeok" style="display: none" />
+      <input type="radio" name="loc-group" id="chk-jangseong" style="display: none" />
+      <input type="radio" name="loc-group" id="chk-court" style="display: none" />
+      <input type="radio" name="loc-group" id="chk-yeongildai" style="display: none" />
+
+      <input type="radio" name="cat-group" id="chk-all-cat" checked style="display: none" />
+      <input type="radio" name="cat-group" id="chk-family" style="display: none" />
+      <input type="radio" name="cat-group" id="chk-honbab" style="display: none" />
+      <input type="radio" name="cat-group" id="chk-couple" style="display: none" />
+      <input type="radio" name="cat-group" id="chk-tour" style="display: none" />
+      <input type="radio" name="cat-group" id="chk-cafe" style="display: none" />
+
+      <section class="filter-section map-box">
+        <h2><i class="fa-solid fa-map-location-dot"></i> 1. 지역 선택</h2>
+
+        <div class="map-wrapper">
+          <img src="약도.png" alt="한동대 주변 맛집 약도" class="responsive-map" />
+
+          <label
+            for="chk-handong"
+            title="한동대"
+            style="
+              position: absolute;
+              top: 3.42%;
+              left: 39.63%;
+              width: 15.62%;
+              padding-top: 15.62%;
+              border-radius: 50%;
+              cursor: pointer;
+              z-index: 20;
+            "
+          ></label>
+          <label
+            for="chk-court"
+            title="법원"
+            style="
+              position: absolute;
+              top: 33.79%;
+              left: 42.91%;
+              width: 6.25%;
+              padding-top: 6.25%;
+              border-radius: 50%;
+              cursor: pointer;
+              z-index: 20;
+            "
+          ></label>
+          <label
+            for="chk-jangseong"
+            title="장성/장량"
+            style="
+              position: absolute;
+              top: 50.83%;
+              left: 27.76%;
+              width: 15.62%;
+              padding-top: 15.62%;
+              border-radius: 50%;
+              cursor: pointer;
+              z-index: 20;
+            "
+          ></label>
+          <label
+            for="chk-yangdeok"
+            title="양덕"
+            style="
+              position: absolute;
+              top: 49.16%;
+              left: 59.63%;
+              width: 13.54%;
+              padding-top: 13.54%;
+              border-radius: 50%;
+              cursor: pointer;
+              z-index: 20;
+            "
+          ></label>
+          <label
+            for="chk-yeongildai"
+            title="영일대"
+            style="
+              position: absolute;
+              top: 76.01%;
+              left: 61.56%;
+              width: 8.33%;
+              padding-top: 8.33%;
+              border-radius: 50%;
+              cursor: pointer;
+              z-index: 20;
+            "
+          ></label>
+        </div>
+
+        <div class="location-buttons">
+          <label for="chk-all-loc" class="btn-link lbl-all">전체보기</label>
+          <label for="chk-handong" class="btn-link lbl-handong">한동대</label>
+          <label for="chk-yangdeok" class="btn-link lbl-yangdeok">양덕</label>
+          <label for="chk-jangseong" class="btn-link lbl-jangseong">장성/장량</label>
+          <label for="chk-court" class="btn-link lbl-court">법원</label>
+          <label for="chk-yeongildai" class="btn-link lbl-yeongildai">영일대</label>
+        </div>
+      </section>
+
+      <section class="filter-section category-box">
+        <h2><i class="fa-solid fa-tags"></i> 2. 해당 지역 내 테마 선택</h2>
+        <div class="category-buttons">
+          <label for="chk-family" class="btn-link lbl-family">가족과</label>
+          <label for="chk-honbab" class="btn-link lbl-honbab">혼밥</label>
+          <label for="chk-couple" class="btn-link lbl-couple">연인과</label>
+          <label for="chk-tour" class="btn-link lbl-tour">관광</label>
+          <label for="chk-cafe" class="btn-link lbl-cafe">카페</label>
+        </div>
+      </section>
+
+      <section class="result-section">
+        <h2><i class="fa-solid fa-list-check"></i> 3. 추천 맛집 결과</h2>
+        <iframe
+          src="restaurants.html"
+          name="food-frame"
+          class="embed-food-window"
+          title="식당 리스트"
+          id="food-iframe"
+        ></iframe>
+      </section>
+    </main>
+
+    <script>
+      // 1. 현재 선택 상태를 분석해 iframe 내부 카드를 AND 연산 필터링하는 함수
+      function applyCombinedFilter() {
+        var locInput = document.querySelector('input[name="loc-group"]:checked');
+        var catInput = document.querySelector('input[name="cat-group"]:checked');
+
+        var locValue = locInput ? locInput.id.replace('chk-', '') : 'all-loc';
+        var catValue = catInput ? catInput.id.replace('chk-', '') : 'all-cat';
+
+        var iframe = document.getElementById('food-iframe');
+        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var cards = iframeDoc.querySelectorAll('.restaurant-card');
+
+        cards.forEach(function (card) {
+          var cardLoc = card.getAttribute('data-location') || '';
+          var cardCat = card.getAttribute('data-category') || '';
+
+          // 지역 매칭 검사
+          var matchLoc = false;
+          if (locValue === 'all-loc' || locValue === 'all') matchLoc = true;
+          else if (locValue === 'handong' && cardCat.includes('배달')) matchLoc = true;
+          else if (locValue === 'yangdeok' && cardLoc === '양덕') matchLoc = true;
+          else if (locValue === 'court' && cardLoc === '법원') matchLoc = true;
+          else if (locValue === 'yeongildai' && cardLoc === '영일대') matchLoc = true;
+          else if (locValue === 'jangseong' && (cardLoc.includes('장성') || cardLoc.includes('장량'))) matchLoc = true;
+
+          // 카테고리 매칭 검사
+          var matchCat = false;
+          if (catValue === 'all-cat' || catValue === 'all') matchCat = true;
+          else if (catValue === 'family' && cardCat.includes('가족과')) matchCat = true;
+          else if (catValue === 'honbab' && cardCat.includes('혼밥')) matchCat = true;
+          else if (catValue === 'couple' && cardCat.includes('연인과')) matchCat = true;
+          else if (catValue === 'tour' && cardCat.includes('관광')) matchCat = true;
+          else if (catValue === 'cafe' && cardCat.includes('카페')) matchCat = true;
+
+          // AND 만족 여부에 따라 노출/숨김 강제 제어
+          if (matchLoc && matchCat) {
+            card.style.setProperty('display', 'flex', 'important');
+          } else {
+            card.style.setProperty('display', 'none', 'important');
+          }
+        });
+      }
+
+      // 2. [토글 취소] 이미 체크된 버튼 재클릭 시 취소하고 전체보기로 리셋
+      document.querySelectorAll('.location-buttons label, .map-wrapper label').forEach(function (label) {
+        label.addEventListener('click', function (e) {
+          var targetId = this.getAttribute('for');
+          var targetRadio = document.getElementById(targetId);
+
+          if (targetId === 'chk-all-loc') return;
+
+          if (targetRadio && targetRadio.checked) {
+            e.preventDefault();
+            document.getElementById('chk-all-loc').checked = true;
+            applyCombinedFilter();
+          }
+        });
+      });
+
+      document.querySelectorAll('.category-buttons label').forEach(function (label) {
+        label.addEventListener('click', function (e) {
+          var targetId = this.getAttribute('for');
+          var targetRadio = document.getElementById(targetId);
+
+          if (targetRadio && targetRadio.checked) {
+            e.preventDefault();
+            document.getElementById('chk-all-cat').checked = true;
+            applyCombinedFilter();
+          }
+        });
+      });
+
+      // 3. 필터 변경 및 iframe 로딩 시 실시간 동기화
+      document.querySelectorAll('input[name="loc-group"], input[name="cat-group"]').forEach(function (radio) {
+        radio.addEventListener('change', applyCombinedFilter);
+      });
+      document.getElementById('food-iframe').addEventListener('load', applyCombinedFilter);
+    </script>
+  </body>
+</html>
