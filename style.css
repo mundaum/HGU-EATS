@@ -1,9 +1,4 @@
-/* =================================================================
-   [HGU-EATS 순수 HTML/CSS 마스터 통합 스타일시트 - style.css 완결본]
-   - 기능: 모바일 반응형 최적화 + 중복 바구니 격파 + 서브 사진 배율 고정 + 불빛 연동
-================================================================= */
-
-/* ─── [1. 전역 변수 및 테마 컬러 세팅] ─── */
+/* ─── [1. 전역 변수 및 테마 컬러] ─── */
 :root {
   --hgu-blue: #003a70;
   --baemin-mint: #2ac1bc;
@@ -151,7 +146,7 @@ body {
 }
 
 /* =================================================================
-   📦 [7. 가로 3열 격자 정렬 및 중복 바구니 정석 우회]
+     [7. 가로 3열 격자 정렬 및 반응형 레이아웃]
 ================================================================= */
 .restaurant-list-container {
   display: grid;
@@ -162,13 +157,12 @@ body {
   padding: 10px;
 }
 
-/* 중복 바구니가 침범해도 내부 구조 붕괴 차단 */
 .restaurant-list-container .restaurant-list-container {
   display: contents;
 }
 
 /* =================================================================
-   💾 [8. 개별 식당 카드 세부 디자인 요소 스펙 완결]
+     [8. 개별 식당 카드 세부 디자인]
 ================================================================= */
 .restaurant-list-container .restaurant-card {
   background-color: #ffffff;
@@ -190,7 +184,6 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* 📸 3분할 사진 격자창 디자인 고정 스펙 */
 .restaurant-card .image-gallery-box {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -209,22 +202,18 @@ body {
   height: 100%;
   overflow: hidden;
 }
-
-/* 💡 오른쪽 서브 사진 2개의 방을 위아래 무조건 107.5px 고정으로 반반 강제 성형 */
 .restaurant-card .sub-photos {
   display: grid;
   grid-template-rows: 107.5px 107.5px;
   gap: 5px;
   height: 100%;
 }
-
 .restaurant-card .sub-photo-item {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-
 .restaurant-card .image-gallery-box img {
   width: 100%;
   height: 100%;
@@ -232,7 +221,6 @@ body {
   display: block;
 }
 
-/* 🚨 이미지 설명용 우하단 검은색 뱃지 라벨 자석 고정 스펙 */
 .restaurant-card .main-photo .image-label,
 .restaurant-card .sub-photo-item .image-label {
   position: absolute;
@@ -251,7 +239,6 @@ body {
   white-space: nowrap;
 }
 
-/* 📝 카드 하단 인포 텍스트 박스 */
 .restaurant-card .card-info-box {
   padding: 22px;
   display: flex;
@@ -261,21 +248,17 @@ body {
   position: relative;
   margin-top: 0;
 }
-
-/* 둥근 해시태그 배치 */
 .restaurant-card .card-tags {
   display: flex;
   gap: 6px;
   margin-bottom: 14px;
 }
-
 .restaurant-card .card-tags span {
   font-size: 11.5px;
   font-weight: 700;
   padding: 5px 12px;
   border-radius: 30px;
 }
-
 .restaurant-card .tag-location {
   background-color: #e0f2fe;
   color: var(--hgu-blue);
@@ -284,8 +267,6 @@ body {
   background-color: #e0fbf9;
   color: var(--baemin-mint);
 }
-
-/* 식당 이름 */
 .restaurant-card .restaurant-name {
   font-size: 21px;
   color: var(--text-dark);
@@ -294,7 +275,6 @@ body {
   text-align: left;
 }
 
-/* 주소, 대표메뉴, 시간 디테일 행 */
 .restaurant-card .restaurant-details {
   font-size: 13.5px;
   color: #475569;
@@ -304,44 +284,37 @@ body {
   margin-bottom: 16px;
   text-align: left;
 }
-
 .restaurant-card .restaurant-details p {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
 
-/* 💡 [수정 구역] 팻말 글자(위치, 대표 메뉴 등)들이 좁아도 절대로 줄바꿈되지 않게 방어막 구축 */
 .restaurant-card .restaurant-details p strong {
   white-space: nowrap;
   flex-shrink: 0;
 }
-
 .restaurant-card .restaurant-details p i {
   margin-top: 3px;
   width: 16px;
   color: #94a3b8;
   font-size: 14px;
-  flex-shrink: 0; /* 아이콘 찌그러짐 방지 */
+  flex-shrink: 0;
 }
 
-/* 장점 및 특징 블릿 기호 설정 */
 .restaurant-card .restaurant-features {
   margin-bottom: 18px;
   text-align: left;
 }
-
 .restaurant-card .restaurant-features h4 {
   font-size: 13.5px;
   color: var(--hgu-blue);
   margin-bottom: 8px;
   font-weight: 700;
 }
-
 .restaurant-card .restaurant-features ul {
   list-style: none;
 }
-
 .restaurant-card .restaurant-features ul li {
   font-size: 13px;
   color: #475569;
@@ -349,7 +322,6 @@ body {
   position: relative;
   padding-left: 14px;
 }
-
 .restaurant-card .restaurant-features ul li::before {
   content: '•';
   color: var(--baemin-mint);
@@ -358,8 +330,6 @@ body {
   left: 2px;
   top: 0;
 }
-
-/* 배민 스타일 좌측 포인트 한줄평 명당 */
 .restaurant-card .restaurant-review {
   background-color: var(--bg-gray);
   padding: 14px;
@@ -374,28 +344,8 @@ body {
 }
 
 /* =================================================================
-   🟢 [최종 마감] 슬래시 보정 완료 - 라디오 스위치 불빛 고정 엔진
+    [9. 필터 제어]
 ================================================================= */
-
-/* 💡 1. [버튼 불빛 영구 고정] 사용자가 다른 곳을 클릭해도 민트색 활성화 불빛 유지 */
-#chk-all-loc:checked ~ .filter-section .lbl-all,
-#chk-handong:checked ~ .filter-section .lbl-handong,
-#chk-yangdeok:checked ~ .filter-section .lbl-yangdeok,
-#chk-jangseong:checked ~ .filter-section .lbl-jangseong,
-#chk-court:checked ~ .filter-section .lbl-court,
-#chk-yeongildai:checked ~ .filter-section .lbl-yeongildai,
-#chk-family:checked ~ .category-box .lbl-family,
-#chk-honbab:checked ~ .category-box .lbl-honbab,
-#chk-couple:checked ~ .category-box .lbl-couple,
-#chk-tour:checked ~ .category-box .lbl-tour,
-#chk-cafe:checked ~ .category-box .lbl-cafe {
-  background-color: var(--baemin-mint) !important;
-  color: #ffffff !important;
-  border-color: var(--baemin-mint) !important;
-  box-shadow: 0 4px 10px rgba(42, 193, 188, 0.3) !important;
-}
-
-/* 💡 2. [창문 안쪽 원격 제어용 정석 필터 로직] */
 .restaurant-list-container .restaurant-card {
   display: flex !important;
 }
@@ -414,7 +364,6 @@ body {
   display: none !important;
 }
 
-/* 지역별 타겟 독립 필터링 가동 (한동대 배달, 장성/장량동 이중 포함 예외처리 유지) */
 #handong-zone:target ~ .restaurant-card:not([data-category*='배달']),
 #handong-zone:target ~ .restaurant-list-container .restaurant-card:not([data-category*='배달']),
 #yangdeok-zone:target ~ .restaurant-card:not([data-location='양덕']),
@@ -430,7 +379,6 @@ body {
   display: none !important;
 }
 
-/* 카테고리별 전체 지역 기준 타겟 독립 필터링 가동 (data-category 오타 수정 완료) */
 #honbab-zone:target ~ .restaurant-card:not([data-category*='혼밥']),
 #honbab-zone:target ~ .restaurant-list-container .restaurant-card:not([data-category*='혼밥']),
 #couple-zone:target ~ .restaurant-card:not([data-category*='연인과']),
